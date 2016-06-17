@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta charset="utf-8">
+    
+    <title>{{page-title}}</title>
+    
+    <link href="styles/main.css" rel="stylesheet">
+    <link href="styles/pygments.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="styles/css.css">
+
+    <script type="text/javascript" charset="utf-8" async="" src="javascript/button.js"></script>
+  </head>
+  {% include "templates/header.html" %}
+  {% include "templates/menu-selection.html" %}
+  <div class="container wrap">
+    <div class="main">
+      {% block content %}{% endblock %}
+    </div>
+    <div class="secondary">
+      <div id="undefined-sticky-wrapper" class="sticky-wrapper" style="height: 1244px;">
+        <div id="undefined-sticky-wrapper" class="sticky-wrapper" style="height: 1245px;">
+          <div id="undefined-sticky-wrapper" class="sticky-wrapper" style="height: 1245px;">
+            <div id="undefined-sticky-wrapper" class="sticky-wrapper" style="height: 0px;"><div class="wrapper" style="width: 252px;">
+                <div class="junk">
+                  <a target="_blank" href="">
+                    <img src="images/immersed_knowledge.jpg">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include "templates/footer.html" %}
+</html>
