@@ -1,7 +1,11 @@
-(ns immerger.web.state
-  (:require [immerger.web :as page]))
+(ns immerger.web.state)
 
-(def drop-path (ref ""))
+(def drop-path (ref (str (or
+                          (System/getenv "TEMP")
+                          (System/getenv "TMP")
+                          (System/getenv "HOME"))
+                         (System/getProperty "file.separator")
+                         "immerger_drop")))
 
 (defn set-drop-path [path]
   (dosync
