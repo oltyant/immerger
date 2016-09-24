@@ -11,4 +11,5 @@
                  [ring/ring-defaults "0.1.2"]
                  [hiccup "1.0.5"]
                  [selmer "1.0.4"]
-                 [hawk "0.2.10"]])
+                 [hawk "0.2.10"]
+                 ])
