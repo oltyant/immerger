@@ -1,5 +1,5 @@
 (defproject immerger "0.1.0-SNAPSHOT"
-  :description "Web application for solving different problems space on different programming languages to obtain statistics and be able to compare them in their purest form"
+  :description "Web application for solving different problems on different programming languages to obtain statistics and be able to compare them in their purest form"
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
   :license {:name "Eclipse Public License"
@@ -11,5 +11,5 @@
                  [ring/ring-defaults "0.1.2"]
                  [hiccup "1.0.5"]
                  [selmer "1.0.4"]
-                 [hawk "0.2.10"]
-                 ])
+                 [hawk "0.2.10"]]
+  :main immerger.web)

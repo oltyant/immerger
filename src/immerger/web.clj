@@ -6,7 +6,12 @@
             [hiccup.page :as page]
             [selmer.parser :refer [render-file]]
             [selmer.util :refer [without-escaping]]
-            [immerger.web.handlers :as web-handlers]))
+            [immerger.web.handlers :as web-handlers])
+            [immerger.web.state :as wstate]
+            [clojure.string :as str])
+
+(def supported-os-list
+  ["Linux"])
 
 (defn index []
   (page/html5
@@ -28,7 +33,11 @@
                {:name "Quests" :click ""}
                {:name "Languages" :click ""}
                {:name "Measurements" :click ""}
-               {:name "Upload" :click ""}]]
+               {:name "Upload" :click ""}]
+        body-content (if (wstate/os-supported? supported-os-list)
+                       (html [:span "You have a linux, Good"])
+                       (html [:span (str "Sorry but this web application only supports the following Op systems: "
+                                         (str/join "," supported-os-list))]))]
     (without-escaping
      (render-file "templates/index.html"
                   {:page-title page-title :header-menus header-menus
@@ -36,7 +45,13 @@
                    :menus menus :subtitle subtitle
                    :body-content (web-handlers/index-handler request)}))))
 
-(defn immersing [] (base nil))
+(defn immersing [] (base {:page-title page-title
+                   :header-menus header-menus
+                   :title-link title-link
+                   :main-title main-title
+                   :menus menus
+                   :subtitle subtitle
+                   :body-content body-content}))
 
 (defroutes routes
   (GET "/" request (base request))
