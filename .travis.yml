@@ -3,3 +3,6 @@ jdk:
    - oraclejdk7
    - oraclejdk8
 script: lein test
+services: mongodb
+before_script:
+   - mongo mydb_test --eval 'db.addUser("travis", "test");'
