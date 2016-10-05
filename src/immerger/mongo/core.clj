@@ -23,6 +23,6 @@
 (defn init-mongo []
   (doseq [[key val] (seq immerger-coll-names)]
     (try
-      (when (check-db-empty? (get-mongo-config-coll val)) (immerger.drop/insert-from-path val "*"))
+      (when (check-db-empty? (get-mongo-config-coll val)) (println "DB empty"))
       (catch Exception e (str "Caught Exception: " (.getMessage  e)))
       )))

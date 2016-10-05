@@ -1,11 +1,12 @@
 (ns immerger.web
-  (:require [compojure.core :refer [defroutes GET]]
+  (:require [compojure.core :refer [defroutes GET POST]]
             [compojure.route :as route]
             [ring.adapter.jetty :as ring]
             [hiccup.core :refer [html]]
             [hiccup.page :as page]
             [selmer.parser :refer [render-file]]
-            [selmer.util :refer [without-escaping]]))
+            [selmer.util :refer [without-escaping]]
+            [immerger.web.handlers :as web-handlers]))
 
 (defn index []
   (page/html5
@@ -14,7 +15,7 @@
    [:body
     [:div {:id "content"} "The Immerger"]]))
 
-(defn base []
+(defn base [request]
   (let [page-title "Immerger - Opening page"
         header-menus [{:title "Concept" :link ""}
                       {:title "About" :link ""}]
@@ -32,12 +33,14 @@
      (render-file "templates/index.html"
                   {:page-title page-title :header-menus header-menus
                    :title-link title-link :main-title main-title
-                   :menus menus :subtitle subtitle}))))
+                   :menus menus :subtitle subtitle
+                   :body-content (web-handlers/index-handler request)}))))
 
-(defn immersing [] (base))
+(defn immersing [] (base nil))
 
 (defroutes routes
-  (GET "/" [] (base))
+  (GET "/" request (base request))
+  (POST "/set-drop-path" request (base request))
   (GET "/immersing" [] (immersing))
   (route/resources "/")
   (route/not-found "Page Not Found"))
