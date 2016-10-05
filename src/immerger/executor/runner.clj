@@ -7,4 +7,3 @@
      (apply shell/sh command)))
   ([coll]
    (apply shell/sh coll)))
-

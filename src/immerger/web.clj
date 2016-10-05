@@ -6,9 +6,9 @@
             [hiccup.page :as page]
             [selmer.parser :refer [render-file]]
             [selmer.util :refer [without-escaping]]
-            [immerger.web.handlers :as web-handlers])
+            [immerger.web.handlers :as web-handlers]
             [immerger.web.state :as wstate]
-            [clojure.string :as str])
+            [clojure.string :as str]))
 
 (def supported-os-list
   ["Linux"])
@@ -40,18 +40,15 @@
                                          (str/join "," supported-os-list))]))]
     (without-escaping
      (render-file "templates/index.html"
-                  {:page-title page-title :header-menus header-menus
-                   :title-link title-link :main-title main-title
-                   :menus menus :subtitle subtitle
-                   :body-content (web-handlers/index-handler request)}))))
-
-(defn immersing [] (base {:page-title page-title
+                  {:page-title page-title
                    :header-menus header-menus
                    :title-link title-link
                    :main-title main-title
                    :menus menus
                    :subtitle subtitle
-                   :body-content body-content}))
+                   :body-content (web-handlers/index-handler request)}))))
+
+(defn immersing [] (base nil))
 
 (defroutes routes
   (GET "/" request (base request))

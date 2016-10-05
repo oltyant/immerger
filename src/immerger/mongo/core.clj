@@ -2,10 +2,11 @@
   (:require [monger.core :as mg]
             [monger.collection :as mc]
             [clojure.string :as str]
+            [immerger.drop.watcher :as watcher] 
             [immerger.executor.runner :as runner]))
 
 (def mongodb-up?
-  (let [status (:out (runner/execute ["/etc/init.d/mongod" "status"]))
+  (let [status (:out (runner/execute-command ["sh" "/etc/init.d/mongodb" "status"]))
         status-vec (str/split status #"\n")
         status-regex (partial re-find #"Active: \b(\w+)\b \(\w+\)")
         status-result (reduce #(if-let [res (status-regex %2)] res %1) (vector) status-vec)]
@@ -42,6 +43,6 @@
   (doseq [[key val] (seq immerger-coll-names)]
     (try
       (when (check-db-empty? (get-mongo-config-coll val))
-        (immerger.drop/insert-from-path val "*"))
+        " ")
       (catch Exception e
         (str "Caught Exception: " (.getMessage e))))))
