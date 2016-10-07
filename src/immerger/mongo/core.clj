@@ -3,7 +3,8 @@
             [monger.collection :as mc]
             [clojure.string :as str]
             [immerger.drop.watcher :as watcher] 
-            [immerger.executor.runner :as runner]))
+            [immerger.executor.runner :as runner])
+  (:import org.bson.types.ObjectId))
 
 (def mongodb-up?
   (let [status (:out (runner/execute-command ["sh" "/etc/init.d/mongodb" "status"]))
@@ -38,6 +39,12 @@
   (get-mongo-config immerger-db-name coll))
 
 (defn create-db [config] ())
+
+(defn insert [db collname documents]
+  (let [cnt (count documents)
+        oid (ObjectId.)
+        bsons (map #(merge % oid) documents)]
+    (map #(mc/insert-and-return db collname %) bsons)))
 
 (defn init-mongo []
   (doseq [[key val] (seq immerger-coll-names)]
