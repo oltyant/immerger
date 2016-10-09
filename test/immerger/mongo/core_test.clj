@@ -10,9 +10,10 @@
           res (core/get-mongo-config dbname collname)]
       (is (and (:db res) (:connection res))))))
 
-(deftest check-db-empty-test
-  (testing "After insertion it should give back false"
-    (let [config (core/get-mongo-config "mydb_test" "something")
-          newentry (core/insert (:db config)
-                                "something" [{:name "John" :age 30 :pets ["Sam" "Chelsie"]}])]
-        true)))
+;; (deftest check-db-empty-test
+;;   (testing "After insertion it should give back false"
+;;     (let [config (core/get-mongo-config "mydb_test" "something")
+;;           newentry (core/insert (:db config)
+;;                                 "something" [{:name "John" :age 30 :pets ["Sam" "Chelsie"]}])]
+;;       (println newentry)
+;;         true)))

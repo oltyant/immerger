@@ -1,0 +1,38 @@
+[
+{
+ :name "Clojure"
+ :required-tools ["java" "lein"]
+ :compile "lein build"
+ :run "lein build"
+ :build-file "project.clj"
+ :src-extension ["clj"]
+ :run_extension ["jar" "class"]
+ :test "lein test"
+}
+{
+ :name "Java"
+ :required-tools ["java" "lein"]
+ :compile "lein build"
+ :run "lein build"
+ :build-file "project.clj"
+ :src-extension ["java"]
+ :run_extension ["jar" "class"]
+ :test "lein test"
+}
+{
+ :name "Scala"
+ :required-tools ["java" "sbt"]
+ :compile "sbt clean compile"
+ :run "sbt run"
+ :build-file "build.sbt"
+ :src-extension ["scala"]
+ :run_extension ["jar" "class"]
+ :test "sbt test"
+}
+{
+ :name "Python"
+ :required-tools ["python"]
+ :run "python"
+ :src-extension "py"
+}
+]

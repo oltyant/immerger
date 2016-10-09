@@ -1,0 +1,10 @@
+{
+ :name "Making heterogenous pairs"
+ :description "Based on the input sequence the solution should combine all the values of the input to heterogenous pairs (can be redundant)"
+ :input-description "sequence of elements in one line separated by space"
+ :output-description "all combination of the elements in pairs where the elements are not equal. Separated by newline"
+ :test-input "1 2 a a"
+ :test-output "1 2\n1 a\n1 a\n2 1\n2 a\n2 a\na 1\na 2\na 1\na 2"
+ :time-limit 10
+ :longest-source-line-count 50
+}

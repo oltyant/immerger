@@ -1,0 +1,28 @@
+[{
+ :document-type :languages
+ :required-tags [:required-tools :run :src-extension]
+ :optional-tags [:compile :run-extension :clean :build-file :performance-analisys]
+}
+{
+ :document-type :quests
+ :required-tags [:name :description :input-description :output-description :test-input :test-output]
+ :optional-tags [:time-limit :longest-src-line-count]
+}
+
+{
+ :document-type :measures
+ :required-tags [:name :description :script]
+ :optional-tags [:clojure-func]
+}
+
+{
+ :document-type :stats
+ :required-tags [:name :measure :value]
+ :optional-tags [:threshold :min :max :avg]
+}
+{
+ :document-type :solutions
+ :required-tags [:quest :stats :language :date]
+ :optional-tags []
+}
+]
