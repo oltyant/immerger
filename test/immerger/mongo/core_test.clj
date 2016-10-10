@@ -1,8 +1,11 @@
 (ns immerger.mongo.core-test
   (:require [monger.core :as mg]
+            [monger.command :as mgcmd]
+            [monger.conversion :refer :all]
             [immerger.mongo.core :as core]
             [immerger.executor.runner :as runner]
-            [clojure.test :refer :all]))
+            [clojure.test :refer :all])
+  (:import [com.mongodb BasicDBObject BasicDBList]))
 
 (def ^:const dbname "mydb_test")
 (def ^:const collname "something")
@@ -20,7 +23,16 @@
 
 (deftest mongodb-up-test
   (testing "Mongodb should be up and running"
-    (is (true? (core/mongodb-up?)))))
+    (let [db-config (get-db-config)
+          connection (:connection db-config)
+          cmd (doto (BasicDBObject.)
+               (.put "show" "users"))
+          bsons (mgcmd/raw-admin-command connection cmd)
+          documents (map #(from-db-object % true) bsons)
+          travis-build? #(some (= (:user %) "travis") documents)]
+      (is
+       (if travis-build? true
+         (core/mongodb-up?))))))
 
 (deftest get-mongo-config-test
   (testing "Should connect to the local mongo db"
