@@ -1,9 +1,9 @@
-[![Coverage Status](https://coveralls.io/repos/github/oltyant/immerger/badge.svg?branch=master)][![Travis CI master status](https://travis-ci.org/oltyant/immerger.svg?branch=master)]
+![Coverage Status](https://coveralls.io/repos/github/oltyant/immerger/badge.svg?branch=master) ![Travis CI master status](https://travis-ci.org/oltyant/immerger.svg?branch=master)
 
 # immerger
 
 A Clojure library designed to ... well, that part is up to you.
-
+ 
 ## Usage
 
 FIXME
