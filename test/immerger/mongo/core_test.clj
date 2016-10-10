@@ -21,6 +21,10 @@
     (test)
     (mg/drop-db conn db)))
 
+(deftest coll-valid-test
+  (testing "Should give back valid for stats string"
+    (is (core/coll-valid? "stats"))))
+
 (deftest mongodb-up-test
   (testing "Mongodb should be up and running"
     (let [db-config (get-db-config)
@@ -46,3 +50,23 @@
           documents [{:name "insert-test" :age "infant"}]
           result (core/update-or-insert db collname documents)]
       (is result))))
+
+(deftest query-document-test
+  (testing "Should give back the document inserted based on a proper criterion"
+    (let [collname "stats"
+          config (core/get-mongo-config dbname collname)
+          db (:db config)
+          documents [{:name "insert-test" :age "infant"}]
+          expected (core/update-or-insert db collname documents)
+          actual (first (core/query-document db collname {:age "infant"}))]
+      (is (= (:age actual) (:age expected))))))
+
+(deftest query-all-documents-test
+  (testing "Should give back all the document in a collection"
+    (let [collname "stats"
+          config (core/get-mongo-config dbname collname)
+          db (:db config)
+          documents [{:name "insert-test" :age "infant"}]
+          expected (first (core/update-or-insert db collname documents))
+          actual (first (core/query-all-documents db collname))]
+      (is (= (:age actual) (:age expected))))))

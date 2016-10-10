@@ -17,6 +17,12 @@
    :languages "languages"
    :solutions "solutions"})
 
+(defn coll-valid?
+  ([collname]
+   ((keyword collname) immerger-coll-names))
+  ([collname incols]
+   ((keyword collname) incols)))
+
 (defn mongodb-up?
   []
   (let [status (:out
@@ -49,6 +55,18 @@
     (for [document documents]
       (do (log/info (str "update or insert document " document))
           (mc/save-and-return db collname document)))))
+
+(defn query-all-documents
+  [db collname]
+  (if (coll-valid? collname)
+    (from-db-object (mc/find-maps db collname) true)
+    {:error (str "There is no " collname " collection in " db)}))
+
+(defn query-document
+  [db collname criterion]
+  (if (coll-valid? collname)
+    (from-db-object (mc/find db collname criterion) true)
+    {:error (str "There is no " collname " collection in " db)}))
 
 (defn init-mongo
   []
