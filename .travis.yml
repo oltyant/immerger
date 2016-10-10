@@ -2,7 +2,9 @@ language: clojure
 jdk:
    - oraclejdk7
    - oraclejdk8
-script: lein test
+script: lein test 
 services: mongodb
 before_script:
    - mongo mydb_test --eval 'db.addUser("travis", "test");'
+after_script:
+  - bash -ex coveralls.sh

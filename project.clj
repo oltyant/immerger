@@ -13,4 +13,5 @@
                  [selmer "1.0.4"]
                  [hawk "0.2.10"]
                  [org.clojure/tools.logging "0.3.1"]]
+  :plugins      [[lein-cloverage "1.0.7"]]
   :main immerger.web)
