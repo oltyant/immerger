@@ -10,3 +10,9 @@
   (testing "Vanilla command line runner test"
     (let [result (exec/execute-command test-python-cmd)]
       (is (> (count (:out result)) 0)))))
+
+(deftest command-line-runner-test2
+  (testing "Vanilla command line runner with vargs"
+    (let [result (apply exec/execute-command test-python-cmd)]
+      (is (> (count (:out result)) 0)))))
+

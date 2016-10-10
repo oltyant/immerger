@@ -6,11 +6,13 @@
 (def drop-path (ref "drop_path"))
 (def initialized (atom false))
 
-(defn os-supported? [oss]
+(defn os-supported?
+  [oss]
   (let [os (System/getProperty "os.name")]
     (some #(.equalsIgnoreCase % os) oss)))
 
-(defn get-app-status []
+(defn get-app-status
+  []
   (if (not @initialized)
    ;;if we do not initialize the db
     (let [os-valid? (os-supported? supported-oss)
@@ -22,6 +24,7 @@
    ;;:else
     {:initialized @initialized}))
 
-(defn set-drop-path [path]
+(defn set-drop-path
+  [path]
   (dosync
    (ref-set drop-path path)))
