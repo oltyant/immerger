@@ -198,9 +198,22 @@ body {
   margin-top: 3em;
   padding-bottom: 7.5em; }
 
-div#menu li {
+div#menu li, div#menu li:hover {
     padding-right: 1.5em;
     float: left;
+}
+
+div#menu li:hover {
+    background-color: #666d77
+}
+
+.main p {
+    margin-bottom: 0.5em;
+    background-color: #f1f1f1;
+}
+
+.main p spam {
+    float: right;
 }
 
 .footer {

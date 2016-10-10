@@ -29,3 +29,9 @@
   [path]
   (dosync
    (ref-set drop-path path)))
+
+(defn get-data
+  [page]
+  (let [config (mg/get-mongo-config-coll page)
+        db (:db config)]
+    (mg/query-all-documents db page)))

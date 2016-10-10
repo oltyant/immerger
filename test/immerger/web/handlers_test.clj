@@ -11,9 +11,14 @@
 (def ^:const test-request-result
   (html [:p "web-path set to: " [:b web-path]]))
 
-(deftest index-handler-test
+(deftest drop-path-handler-test
   (testing "Should give back the proper html tags"
-    (let [html-res (index-handler test-request)
+    (let [html-res (drop-path-handler test-request)
           regex (str "web-path set to:\\s+<b>" web-path "\\s*</b>")
           match (re-find (re-pattern regex) html-res)]
       (is match))))
+
+(deftest index-handler-test
+  (testing "Should give back the proper html tags"
+    (let [html-res (index-handler test-request)]
+      (is (= html-res (html [:h1 "Welcome in the Immerger!"]))))))
