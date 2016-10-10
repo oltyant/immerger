@@ -1,6 +1,7 @@
 (ns immerger.web.state
   (:require [immerger.executor.runner :as runner]
-            [immerger.mongo.core :as mg]))
+            [immerger.mongo.core :as mg]
+            [clojure.tools.logging :as log]))
 
 (def ^:const supported-oss ["Linux"])
 (def drop-path (ref "drop_path"))
@@ -14,15 +15,15 @@
 (defn get-app-status
   []
   (if (not @initialized)
-   ;;if we do not initialize the db
-    (let [os-valid? (os-supported? supported-oss)
-          mg-init (mg/init-mongo)]
-      (swap! initialized #(not %))
-      {:initialized @initialized
-       :os-supported os-valid?
-       :db-init mg-init})
-   ;;:else
-    {:initialized @initialized}))
+    (do (log/info "The system need to be initialized")
+        (let [os-valid? (os-supported? supported-oss)
+              mg-init (mg/init-mongo)]
+          (swap! initialized #(not %))
+          {:initialized @initialized
+           :os-supported os-valid?
+           :db-init mg-init}))
+    (do (log/info "The system is initialized")
+        {:initialized @initialized})))
 
 (defn set-drop-path
   [path]

@@ -4,6 +4,7 @@
             [monger.conversion :refer :all]
             [immerger.executor.runner :as runner]
             [clojure.string :as str]
+            [clojure.java.io :as io]
             [clojure.tools.logging :as log])
   (:import org.bson.types.ObjectId))
 
@@ -46,19 +47,26 @@
   [db collname documents]
   (let [cnt (count documents)]
     (for [document documents]
-      (mc/save-and-return db collname document))))
+      (do (log/info (str "update or insert document " document))
+          (mc/save-and-return db collname document)))))
 
 (defn init-mongo
   []
   (log/info "checking mongodb status")
   (if (mongodb-up?)
-    (for [[key val] (seq immerger-coll-names)]
-      (try
-        (let [mg-config (get-mongo-config-coll val)
-              init-file-name (str "initdb/" val)
-              init-file-content (slurp init-file-name)
-              docs (read-string init-file-content)]
-          (update-or-insert (:db mg-config) val docs))
-        (catch Exception e
-          (str "Caught Exception: " (.getMessage e)))))
+    (let [mg-config (get-mongo-config-coll val)]
+      (for [[key val] immerger-coll-names]
+        (try
+          (log/info (str "Update or insert into Mongo collection: "
+                         key " " val))
+          (let [init-file-name (io/file (io/resource
+                                  (str "initdb/" val ".map")))
+                init-file-content (slurp init-file-name)
+                docs (read-string init-file-content)]
+            (log/info (str "file name: " init-file-name))
+            (log/info (str "file content: "  init-file-content))
+            (log/info docs)
+            (update-or-insert (:db mg-config) val docs))
+          (catch Exception e
+            (str "Caught Exception: " (.getMessage e))))))
     ["cannot find a running mongodb server instance"]))
